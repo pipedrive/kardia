@@ -4,7 +4,7 @@
   "description": "A common API interface to expose Node.js process status operational/internal indicators. HTTP JSON interface",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node test/index.js"
   },
   "repository": {
     "type": "git",
@@ -22,5 +22,9 @@
   "bugs": {
     "url": "https://github.com/pipedrive/kardia/issues"
   },
-  "homepage": "https://github.com/pipedrive/kardia"
+  "homepage": "https://github.com/pipedrive/kardia",
+  "devDependencies": {
+    "async": "~0.9.0",
+    "request": "~2.36.0"
+  }
 }
