@@ -18,6 +18,10 @@
     "monitoring"
   ],
   "author": "Pipedrive Inc",
+  "contributors": [
+    "Andris Reinman",
+    "Martin Tajur"
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/pipedrive/kardia/issues"
