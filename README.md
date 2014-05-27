@@ -8,8 +8,10 @@ Why?
 
 When running several Node.js based processes across different servers like we do here at Pipedrive, we discovered
 it becomes increasingly difficult to monitor the state of different internal variables inside these processes.
-To address this, we created a common status API interface which can be centrally consumed. Kardia is the part of
-this protocol which facilities the "status page" per each (master) process.
+To address this, we created a common status API interface which we consume and analyze centrally, with all Node.js processes on all servers exposing their internal status using Kardia.
+
+* A common interface (JSON over HTTP) that can be consumed in a ton of different ways
+* Human-readable out of the box
 
 Usage
 =====
