@@ -28,26 +28,27 @@ Then, Kardia will create a new HTTP server on the designated port (default 12900
 of the running process in JSON format.
 
 The status page (thus visible at ```http://localhost:12900```) will include the following components:
- * *service* – The name of the service running
- * *pid* – The PID of the master process
- * *env* – The running environment of the process (derived from ```process.env.NODE_ENV```)
- * *uptime* – The master process uptime in seconds
- * *uptime_formatted* – Human-readable uptime (e.g. 2 hours, 48 minutes, 54 seconds)
- * *startTime* — ISO-formatted timestamp of the start time of master process
- * *curTime* — ISO-formatted timestamp of the current time in server
- * *uid* — process.uid of the master process
- * *gid* — process.gid of the master process
- * *values* — key-value container for any user-defined variables using ```kardia.set()``` method
- * *counters* — key-value container for any user-defined counters using ```kardia.increment()``` and ```kardia.decrement()``` methods
- * *remoteAddress* — the IP address of the status page requestor
- * *network* — a dump of available network interfaces on the server
- * *hostname* — name of the server the process is running on
- * *memory* — a dump of the current and initial memory state, and a diff comparing the two
- * *fallBehind* — V8 code execution delay indicator
- * *os* — a dump of operating system data
- * *config* — the configuration which Kardia is currently using
+ * **service** – The name of the service running
+ * **pid** – The PID of the master process
+ * **env** – The running environment of the process (derived from ```process.env.NODE_ENV```)
+ * **uptime** – The master process uptime in seconds
+ * **uptime_formatted** – Human-readable uptime (e.g. 2 hours, 48 minutes, 54 seconds)
+ * **startTime** — ISO-formatted timestamp of the start time of master process
+ * **curTime** — ISO-formatted timestamp of the current time in server
+ * **uid** — process.uid of the master process
+ * **gid** — process.gid of the master process
+ * **values** — key-value container for any user-defined variables using ```kardia.set()``` method
+ * **counters** — key-value container for any user-defined counters using ```kardia.increment()``` and ```kardia.decrement()``` methods
+ * **remoteAddress** — the IP address of the status page requestor
+ * **network** — a dump of available network interfaces on the server
+ * **hostname** — name of the server the process is running on
+ * **memory** — a dump of the current and initial memory state, and a diff comparing the two
+ * **fallBehind** — V8 code execution delay indicator
+ * **os** — a dump of operating system data
+ * **config** — the configuration which Kardia is currently using
 
-, here's an example:
+Here's an example of the status page:
+
 ```json
 {
     "service": "example-service",
