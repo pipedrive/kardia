@@ -3,6 +3,8 @@ Kardia
 
 A humane process status API module to expose any operational/internal indicators of any Node.js process for status aggregation and monitoring. JSON format over HTTP protocol.
 
+[![NPM version](https://badge.fury.io/js/kardia.svg)](http://badge.fury.io/js/kardia)
+
 Why?
 ====
 
@@ -160,4 +162,14 @@ Un-set a specific key within the ```values``` block.
 Licence
 =======
 
-MIT.
+MIT
+
+Want to contribute?
+===================
+
+You're welcome. Please issue a pull request, and also keep an eye on the tests and the readme.
+
+What's the name about?
+======================
+
+From Greek: kardia, meaning heart.
