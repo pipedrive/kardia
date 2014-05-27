@@ -1,0 +1,26 @@
+{
+  "name": "kardia",
+  "version": "0.0.1",
+  "description": "A common API interface to expose Node.js process status operational/internal indicators. HTTP JSON interface",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/pipedrive/kardia.git"
+  },
+  "keywords": [
+    "status",
+    "status",
+    "page",
+    "process",
+    "monitoring"
+  ],
+  "author": "Pipedrive Inc",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pipedrive/kardia/issues"
+  },
+  "homepage": "https://github.com/pipedrive/kardia"
+}
