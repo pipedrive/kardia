@@ -1,7 +1,7 @@
 Kardia
 ======
 
-A humane process status API interface to expose Node.js process status operational/internal indicators for aggregation and monitoring. JSON format over HTTP protocol.
+A humane process status API module to expose any operational/internal indicators of any Node.js process for status aggregation and monitoring. JSON format over HTTP protocol.
 
 Why?
 ====
@@ -17,7 +17,7 @@ Usage
 npm install kardia
 ```
 
-Then, in your code:
+In your code to start the Kardia server:
 
 ```javascript
 var Kardia = require('kardia');
@@ -25,7 +25,29 @@ var kardia = Kardia.start({ name: "My process", port: 12900 });
 ```
 
 Then, Kardia will create a new HTTP server on the designated port (default 12900) which lists the indicators
-of the running process in JSON format, here's an example:
+of the running process in JSON format.
+
+The status page (thus visible at ```http://localhost:12900```) will include the following components:
+ * *service* – The name of the service running
+ * *pid* – The PID of the master process
+ * *env* – The running environment of the process (derived from ```process.env.NODE_ENV```)
+ * *uptime* – The master process uptime in seconds
+ * *uptime_formatted* – Human-readable uptime (e.g. 2 hours, 48 minutes, 54 seconds)
+ * *startTime* — ISO-formatted timestamp of the start time of master process
+ * *curTime* — ISO-formatted timestamp of the current time in server
+ * *uid* — process.uid of the master process
+ * *gid* — process.gid of the master process
+ * *values* — key-value container for any user-defined variables using ```kardia.set()``` method
+ * *counters* — key-value container for any user-defined counters using ```kardia.increment()``` and ```kardia.decrement()``` methods
+ * *remoteAddress* — the IP address of the status page requestor
+ * *network* — a dump of available network interfaces on the server
+ * *hostname* — name of the server the process is running on
+ * *memory* — a dump of the current and initial memory state, and a diff comparing the two
+ * *fallBehind* — V8 code execution delay indicator
+ * *os* — a dump of operating system data
+ * *config* — the configuration which Kardia is currently using
+
+, here's an example:
 ```json
 {
     "service": "example-service",
@@ -118,12 +140,19 @@ Methods
 
 ### kardia.increment("some counter", 2);
 
-Increment a counter. The counter gets created if it did not exist yet. Useful for analyzing execution cycles
-of specific functionality.
+Increment a counter by N. The counters appear in ```counters``` object on the status page. The counter gets created if it did not exist yet. Useful for, for example, analyzing execution counts of specific functions (e.g. performed 291 API PUT requests).
+
+### kardia.decrement("some counter", 1);
+
+Decrement a counter by N.
 
 ### kardia.set("some key", "some value");
 
-Set a specific value to the status page. Useful for connection status indications.
+Set a specific value to the ```values``` key-value object in the status page. Useful for, for example, connection status indications (e.g. whether a certain connection is "CONNECTED" or "CLOSED", etc).
+
+### kardia.unset("some key");
+
+Un-set a specific key within the ```values``` block.
 
 Licence
 =======
