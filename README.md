@@ -43,6 +43,7 @@ The status page (thus visible at ```http://localhost:12900```) will include the 
  * **gid** — process.gid of the master process
  * **values** — key-value container for any user-defined variables using ```kardia.set()``` method
  * **counters** — key-value container for any user-defined counters using ```kardia.increment()``` and ```kardia.decrement()``` methods
+ * **workers** — array of worker processes (must be kept 
  * **remoteAddress** — the IP address of the status page requestor
  * **network** — a dump of available network interfaces on the server
  * **hostname** — name of the server the process is running on
@@ -143,21 +144,55 @@ process.
 Methods
 =======
 
-### kardia.increment("some counter", 2);
+### kardia.increment(key, n);
 
 Increment a counter by N. The counters appear in ```counters``` object on the status page. The counter gets created if it did not exist yet. Useful for, for example, analyzing execution counts of specific functions (e.g. performed 291 API PUT requests).
 
-### kardia.decrement("some counter", 1);
+```javascript
+kardia.increment("some counter", 2);
+```
+
+### kardia.decrement(key, n);
 
 Decrement a counter by N.
 
-### kardia.set("some key", "some value");
+```javascript
+kardia.decrement("some counter", 2);
+```
+
+### kardia.set(key, value);
 
 Set a specific value to the ```values``` key-value object in the status page. Useful for, for example, connection status indications (e.g. whether a certain connection is "CONNECTED" or "CLOSED", etc).
 
-### kardia.unset("some key");
+```javascript
+kardia.set("some key", "value");
+```
+
+### kardia.unset(key);
 
 Un-set a specific key within the ```values``` block.
+
+```javascript
+kardia.unset("some key");
+```
+
+### kardia.addWorker(worker)
+
+Add a worker process to the ```workers`` block. For the argument, you need to pass the worker object from node cluster.
+
+```javascript
+var cluster = require('cluster');
+var worker = cluster.fork();
+kardia.addWorker(worker);
+```
+
+### kardia.removeWorker(worker pid)
+
+Remove a worker process to the ```workers`` block. For the argument, you need to pass the worker PID you wish to remove.
+
+```javascript
+kardia.removeWorker(worker.process.pid);
+```
 
 Licence
 =======
