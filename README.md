@@ -1,8 +1,7 @@
 Kardia
 ======
 
-A common process status API interface to expose Node.js process status operational/internal indicators.
-JSON format over HTTP protocol.
+A humane process status API interface to expose Node.js process status operational/internal indicators for aggregation and monitoring. JSON format over HTTP protocol.
 
 Why?
 ====
