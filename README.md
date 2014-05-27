@@ -152,6 +152,7 @@ Increment a counter by N. The counters appear in ```counters``` object on the st
 kardia.increment("some counter", 2);
 ```
 
+
 ### kardia.decrement(key, n);
 
 Decrement a counter by N.
@@ -193,6 +194,8 @@ Remove a worker process to the ```workers`` block. For the argument, you need to
 ```javascript
 kardia.removeWorker(worker.process.pid);
 ```
+
+---
 
 Licence
 =======
