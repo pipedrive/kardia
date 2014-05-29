@@ -5,4 +5,4 @@ setInterval(function() {
 	kardia.increment('heartbeats', 1);
 }, 1500);
 
-console.log('Kardia started on port 12900, and a counter "heartbeats" is bumped every 1,5 second');
+console.log('Kardia started on port 12900, and a counter "heartbeats" is bumped every 1,5 second. Open your browser at: http://localhost:12900/');
