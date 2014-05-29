@@ -43,7 +43,7 @@ The status page (thus visible at ```http://localhost:12900```) will include the 
  * **gid** — process.gid of the master process
  * **values** — key-value container for any user-defined variables using ```kardia.set()``` method
  * **counters** — key-value container for any user-defined counters using ```kardia.increment()``` and ```kardia.decrement()``` methods
- * **workers** — array of worker processes (must be kept 
+ * **workers** — array of worker processes (must be kept in sync manually, see ```kardia.addWorker()``` and ```kardia.removeWorker()``` below)
  * **remoteAddress** — the IP address of the status page requestor
  * **network** — a dump of available network interfaces on the server
  * **hostname** — name of the server the process is running on
