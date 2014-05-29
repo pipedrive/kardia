@@ -1,5 +1,3 @@
 "use strict";
 
-var Kardia = require('./lib/kardia');
-
-module.exports = Kardia;
+module.exports = require('./lib/kardia');
