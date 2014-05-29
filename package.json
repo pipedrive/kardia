@@ -1,6 +1,6 @@
 {
   "name": "kardia",
-  "version": "0.0.4",
+  "version": "0.1.1",
   "description": "A humane process status API module to expose any operational/internal indicators of any Node.js process for status aggregation and monitoring. JSON format over HTTP protocol.",
   "main": "index.js",
   "scripts": {

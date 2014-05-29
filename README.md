@@ -43,6 +43,7 @@ The status page (thus visible at ```http://localhost:12900```) will include the 
  * **gid** — process.gid of the master process
  * **values** — key-value container for any user-defined variables using ```kardia.set()``` method
  * **counters** — key-value container for any user-defined counters using ```kardia.increment()``` and ```kardia.decrement()``` methods
+ * **stacks** — container for any user-defined stacks using ```kardia.startStack()``` and ```kardia.stack()``` methods
  * **workers** — array of worker processes (must be kept in sync manually, see ```kardia.addWorker()``` and ```kardia.removeWorker()``` below)
  * **remoteAddress** — the IP address of the status page requestor
  * **network** — a dump of available network interfaces on the server
@@ -68,6 +69,22 @@ Here's an example of the status page:
     "values": {},
     "counters": {
         "heartbeats": 6751
+    },
+    "stacks": {
+        "notices": [
+            {
+                "time": "2014-05-27T11:14:26.405Z",
+                "value": "Some notice"
+            },
+            {
+                "time": "2014-05-27T11:14:27.405Z",
+                "value": "Some notice"
+            },
+            {
+                "time": "2014-05-27T11:14:28.405Z",
+                "value": "Some notice"
+            }
+        ]
     },
     "workers": [],
     "remoteAddress": "127.0.0.1",
@@ -159,6 +176,30 @@ Decrement a counter by N.
 
 ```javascript
 kardia.decrement("some counter", 2);
+```
+
+### kardia.startStack(name, length);
+
+Start a new stack with the given name and with a given max length. In the example below, we start the "notices" stack that will be capped at 20 items at all times. You do not have to call .startStack() to start pushing values to a stack — if you pushed to a non-existing stack, the stack would automatically be generated and its length would be capped at 15 items by default.
+
+```javascript
+kardia.startStack("notices", 20);
+```
+
+### kardia.stack(name, value);
+
+Push a new value to a stack. A stack can be pre-configured using .startStack() but does not have to be. If .stack() is called without .startStack(), the default length of the stack will be 15 items.
+
+```javascript
+kardia.stack("notices", "Some random notice");
+```
+
+### kardia.stopStack(name);
+
+Remove a stack and any of its values.
+
+```javascript
+kardia.stopStack("notices");
 ```
 
 ### kardia.set(key, value);
