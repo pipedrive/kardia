@@ -218,32 +218,9 @@ Un-set a specific key within the ```values``` block.
 kardia.unset("some key");
 ```
 
-### kardia.addWorker(worker)
+## Using with cluster module (master-worker processes)
 
-Add a worker process to the ```workers`` block. For the argument, you need to pass the worker object from node cluster.
-
-```javascript
-var cluster = require('cluster');
-var worker = cluster.fork();
-kardia.addWorker(worker);
-```
-
-### kardia.removeWorker(worker pid)
-
-Remove a worker process to the ```workers`` block. For the argument, you need to pass the worker PID you wish to remove.
-
-```javascript
-kardia.removeWorker(worker.process.pid);
-```
-
-## Inter-process communication between master and worker
-
-In multi-threaded processes where there is master and X workers, Kardia will start the status server interface on the master but you can execute all commands in a similar manner as you would on the master.
-
-Ideas/roadmap
-=============
-
-* .addWorker() should return a worker object, exposing methods for manipulating local variables to the given worker data in the kardia output
+In multi-threaded node processes where there is a master and X workers, Kardia will start the status server interface only on the master — but on the worker you can execute all commands shown above in the exact similar manner as you would on the master.
 
 ---
 
