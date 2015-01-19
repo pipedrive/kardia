@@ -1,7 +1,6 @@
 "use strict";
 
-var Kardia = require(".."),
-	request = require("request"),
+var request = require("request"),
 	async = require("async");
 
 var fail = function(msg) {
@@ -13,6 +12,7 @@ function test_that_configuration_must_be_supplied(next) {
 	var errStr = "Kardia cannot start - configuration not supplied";
 	console.log("Expecting "+errStr);
 	try {
+		var Kardia = require("..");
 		Kardia.start();
 		return fail("Test failed - expected \""+errStr+"\" to be raised.");
 	}
@@ -29,6 +29,7 @@ function test_that_name_must_be_supplied(next) {
 	var errStr = "Kardia cannot start - service name must be supplied";
 	console.log("Expecting "+errStr);
 	try {
+		var Kardia = require("..");
 		Kardia.start({});
 		return fail("Test failed - expected \""+errStr+"\" to be raised.");
 	}
@@ -42,11 +43,12 @@ function test_that_name_must_be_supplied(next) {
 }
 
 function test_that_server_is_running(next) {
+	var Kardia = require("..");
 	var serviceName = "test-" + new Date().toISOString();
-	var kardiaInstance = Kardia.start({ name: serviceName, port: 12888 });
+	var kardiaInstance = Kardia.start({ name: serviceName, port: 12809 });
 
 	setTimeout(function() {
-		request("http://127.0.0.1:12888", function(err, res, body) {
+		request("http://127.0.0.1:12809", function(err, res, body) {
 			if (err) throw err;
 			var data = JSON.parse(body);
 
@@ -70,8 +72,9 @@ function test_that_server_is_running(next) {
 }
 
 function test_that_counters_can_be_modified(next) {
+	var Kardia = require("..");
 	var serviceName = "test-" + new Date().toISOString();
-	var kardiaInstance = Kardia.start({ name: serviceName, port: 12888 });
+	var kardiaInstance = Kardia.start({ name: serviceName, port: 12810 });
 
 	kardiaInstance.increment("test-counter", 1);
 	kardiaInstance.increment("test-counter", 3);
@@ -79,7 +82,7 @@ function test_that_counters_can_be_modified(next) {
 	kardiaInstance.decrement("test-counter", 1);
 
 	setTimeout(function() {
-		request("http://127.0.0.1:12888", function(err, res, body) {
+		request("http://127.0.0.1:12810", function(err, res, body) {
 			if (err) throw err;
 			var data = JSON.parse(body);
 
@@ -99,13 +102,14 @@ function test_that_counters_can_be_modified(next) {
 }
 
 function test_that_static_values_can_be_applied(next) {
+	var Kardia = require("..");
 	var serviceName = "test-" + new Date().toISOString();
-	var kardiaInstance = Kardia.start({ name: serviceName, port: 12888 });
+	var kardiaInstance = Kardia.start({ name: serviceName, port: 12811 });
 
 	kardiaInstance.set("test-value", { specific: "value" });
 
 	setTimeout(function() {
-		request("http://127.0.0.1:12888", function(err, res, body) {
+		request("http://127.0.0.1:12811", function(err, res, body) {
 			if (err) throw err;
 			var data = JSON.parse(body);
 
