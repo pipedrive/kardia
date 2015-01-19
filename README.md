@@ -238,31 +238,7 @@ kardia.removeWorker(worker.process.pid);
 
 ## Inter-process communication between master and worker
 
-In multi-threaded processes where there is master and X workers, it is recommended to require Kardia on the master process, and then make it possible for worker processes to send in commands to Kardia using Node.js's cluster inter-process messaging (http://nodejs.org/api/cluster.html#cluster_worker_send_message_sendhandle), such that the workers send in commands to the master, which will then relay the data to Kardia for output. Below is an example code for receiving commands on the master process for passing commands on to Kardia:
-
-```javascript
-// worker is the forked worker process handle, as given by cluster module
-worker.on('message', function(msg) {
-	if (!msg) {
-		return;
-	}
-	if (msg.increment) {
-		kardia.increment(msg.increment);
-	}
-	if (msg.decrement) {
-		kardia.decrement(msg.decrement);
-	}
-	if (msg.stack && msg.value) {
-		kardia.stack(msg.stack, msg.value);
-	}
-	if (msg.set && msg.value) {
-		kardia.set(msg.set, msg.value);
-	}
-	if (msg.unset) {
-		kardia.unset(msg.unset);
-	}
-});
-```
+In multi-threaded processes where there is master and X workers, Kardia will start the status server interface on the master but you can execute all commands in a similar manner as you would on the master.
 
 Ideas/roadmap
 =============

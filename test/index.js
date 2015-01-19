@@ -130,6 +130,7 @@ function test_that_static_values_can_be_applied(next) {
 }
 
 function tests_completed() {
+	console.log("=========================")
 	console.log("OK! All tests passed.");
 	process.exit();
 }
