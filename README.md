@@ -264,6 +264,11 @@ worker.on('message', function(msg) {
 });
 ```
 
+Ideas/roadmap
+=============
+
+* .addWorker() should return a worker object, exposing methods for manipulating local variables to the given worker data in the kardia output
+
 ---
 
 Licence
