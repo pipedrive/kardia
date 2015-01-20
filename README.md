@@ -44,7 +44,7 @@ The status page (thus visible at ```http://localhost:12900```) will include the 
  * **values** — key-value container for any user-defined variables using ```kardia.set()``` method
  * **counters** — key-value container for any user-defined counters using ```kardia.increment()``` and ```kardia.decrement()``` methods
  * **stacks** — container for any user-defined stacks using ```kardia.startStack()``` and ```kardia.stack()``` methods
- * **workers** — array of worker processes (must be kept in sync manually, see ```kardia.addWorker()``` and ```kardia.removeWorker()``` below)
+ * **workers** — array of worker processes (kept in sync automatically and populated with data from each worker when using Node.js's cluster module)
  * **remoteAddress** — the IP address of the status page requestor
  * **network** — a dump of available network interfaces on the server
  * **hostname** — name of the server the process is running on
