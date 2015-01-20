@@ -153,11 +153,6 @@ can build a central handler to aggregate their statuses or hook them up to your 
 systems.
 
 
-When you're using Node.js cluster with multiple worker processes, it is intended that Kardia is used on the
-master process, and all workers can ping their update/change requests about Kardia data to the master
-process.
-
-
 Methods
 =======
 
