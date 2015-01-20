@@ -14,6 +14,7 @@ To address this, we created a common status API interface which we consume and a
 
 * A common interface (JSON over HTTP) that can be consumed in a ton of different ways
 * Human-readable out of the box
+* Use the same way across master and worker processes (all workers' statuses get aggregated to master for output automatically)
 
 Usage
 =====
