@@ -14,6 +14,7 @@ To address this, we created a common status API interface which we consume and a
 
 * A common interface (JSON over HTTP) that can be consumed in a ton of different ways
 * Human-readable out of the box
+* Use the same way across master and worker processes (all workers' statuses get aggregated to master for output automatically)
 
 Usage
 =====
@@ -21,15 +22,14 @@ Usage
 npm install kardia
 ```
 
-In your code to start the Kardia server:
+In your code to start Kardia:
 
 ```javascript
 var Kardia = require('kardia');
 var kardia = Kardia.start({ name: "My process", port: 12900 });
 ```
 
-Then, Kardia will create a new HTTP server on the designated port (default 12900) which lists the indicators
-of the running process in JSON format.
+Then, when run on the master process, Kardia will create a new HTTP server on the designated port (default 12900) which lists the indicators of the running process in JSON format. On the worker process (using Node.js's cluster module), it will expose the same interface and start collecting data which it sends back to the master process automatically using IPC to be displayed with the Kardia HTTP server along with data from the master and all worker processes.
 
 The status page (thus visible at ```http://localhost:12900```) will include the following components:
  * **service** – The name of the service running
@@ -44,7 +44,7 @@ The status page (thus visible at ```http://localhost:12900```) will include the 
  * **values** — key-value container for any user-defined variables using ```kardia.set()``` method
  * **counters** — key-value container for any user-defined counters using ```kardia.increment()``` and ```kardia.decrement()``` methods
  * **stacks** — container for any user-defined stacks using ```kardia.startStack()``` and ```kardia.stack()``` methods
- * **workers** — array of worker processes (must be kept in sync manually, see ```kardia.addWorker()``` and ```kardia.removeWorker()``` below)
+ * **workers** — array of worker processes (kept in sync automatically and populated with data from each worker when using Node.js's cluster module)
  * **remoteAddress** — the IP address of the status page requestor
  * **network** — a dump of available network interfaces on the server
  * **hostname** — name of the server the process is running on
@@ -153,11 +153,6 @@ can build a central handler to aggregate their statuses or hook them up to your 
 systems.
 
 
-When you're using Node.js cluster with multiple worker processes, it is intended that Kardia is used on the
-master process, and all workers can ping their update/change requests about Kardia data to the master
-process.
-
-
 Methods
 =======
 
@@ -218,23 +213,9 @@ Un-set a specific key within the ```values``` block.
 kardia.unset("some key");
 ```
 
-### kardia.addWorker(worker)
+## Using with cluster module (master-worker processes)
 
-Add a worker process to the ```workers`` block. For the argument, you need to pass the worker object from node cluster.
-
-```javascript
-var cluster = require('cluster');
-var worker = cluster.fork();
-kardia.addWorker(worker);
-```
-
-### kardia.removeWorker(worker pid)
-
-Remove a worker process to the ```workers`` block. For the argument, you need to pass the worker PID you wish to remove.
-
-```javascript
-kardia.removeWorker(worker.process.pid);
-```
+In multi-threaded node processes where there is a master and X workers, Kardia will start the status server interface only on the master — but on the worker you can execute all commands shown above in the exact similar manner as you would on the master.
 
 ---
 
