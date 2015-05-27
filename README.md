@@ -1,16 +1,16 @@
 Kardia
 ======
 
-A humane process status API module to expose any operational/internal indicators of any Node.js process for status aggregation and monitoring. JSON format over HTTP protocol.
+A humane service status API module to expose any operational/internals of any Node.js microservice / process. JSON format over HTTP protocol. Perfect for further aggregation and consumption from a larger set of services that all expose their internals using the Kardia interface.
 
 [![NPM version](https://badge.fury.io/js/kardia.svg)](http://badge.fury.io/js/kardia)
 
 Why?
 ====
 
-When running several Node.js based processes across different servers like we do here at Pipedrive, we discovered
-it becomes increasingly difficult to monitor the state of different internal variables inside these processes.
-To address this, we created a common status API interface which we consume and analyze centrally, with all Node.js processes on all servers exposing their internal status using Kardia.
+When running several Node.js based microservices across large number of hosts/containers like we do here at Pipedrive, we discovered it becomes increasingly difficult to monitor the state of different internal variables inside these processes.
+
+To address this, we created a common status API interface which we consume and analyze centrally, with all Node.js services on all hosts exposing their internal status using Kardia format.
 
 * A common interface (JSON over HTTP) that can be consumed in a ton of different ways
 * Human-readable out of the box
