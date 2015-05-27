@@ -1,7 +1,7 @@
 Kardia
 ======
 
-A humane service status API module to expose any operational/internals of any Node.js microservice / process. JSON format over HTTP protocol. Perfect for further aggregation and consumption from a larger set of services that all expose their internals using the Kardia interface.
+A humane service status API module to expose any operational/internals of any Node.js based microservice. JSON format over HTTP protocol. Perfect for further aggregation and consumption from a larger set of services that all expose their internals using the Kardia interface.
 
 [![NPM version](https://badge.fury.io/js/kardia.svg)](http://badge.fury.io/js/kardia)
 
