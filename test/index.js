@@ -71,6 +71,37 @@ function test_that_server_is_running(next) {
 	}, 100);
 }
 
+function test_that_server_running_on_right_port(next) {
+	var Kardia = require("..");
+	var serviceName = "test-" + new Date().toISOString();
+	var kardiaInstance = Kardia.start({ name: serviceName, port: 12813 });
+	kardiaInstance.server.on("listening", function(){
+		var connectionKey = this._connectionKey;
+		if (!connectionKey.match(/:12813$/)) {
+			console.log("fail1");
+			fail("Kardia ignore option port");
+		}
+		kardiaInstance.stopServer();
+
+		next();
+	});
+}
+
+function test_that_server_running_on_right_host(next) {
+	var Kardia = require("..");
+	var serviceName = "test-" + new Date().toISOString();
+	var kardiaInstance = Kardia.start({ name: serviceName, port: 12814, host: '127.0.0.1' });
+	kardiaInstance.server.on("listening", function(){
+		var connectionKey = this._connectionKey;
+		if (!connectionKey.match(/:127\.0\.0\.1:/)) {
+			fail("Kardia ignore option host");
+		}
+		kardiaInstance.stopServer();
+
+		next();
+	});
+}
+
 function test_that_counters_can_be_modified(next) {
 	var Kardia = require("..");
 	var serviceName = "test-" + new Date().toISOString();
@@ -198,6 +229,8 @@ async.series([
 	test_that_configuration_must_be_supplied,
 	test_that_name_must_be_supplied,
 	test_that_server_is_running,
+	test_that_server_running_on_right_port,
+	test_that_server_running_on_right_host,
 	test_that_counters_can_be_modified,
 	test_that_static_values_can_be_applied,
 	test_that_stacks_are_not_growing_beyond_size,
