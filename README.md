@@ -43,6 +43,7 @@ The status page (thus visible at ```http://localhost:12900```) will include the 
  * **gid** — process.gid of the master process
  * **values** — key-value container for any user-defined variables using ```kardia.set()``` method
  * **counters** — key-value container for any user-defined counters using ```kardia.increment()``` and ```kardia.decrement()``` methods
+ * **throughput** — key-value container for any user-defined throughput measures using ```kardia.throughput()```
  * **stacks** — container for any user-defined stacks using ```kardia.startStack()``` and ```kardia.stack()``` methods
  * **workers** — array of worker processes (kept in sync automatically and populated with data from each worker when using Node.js's cluster module)
  * **remoteAddress** — the IP address of the status page requestor
@@ -69,6 +70,18 @@ Here's an example of the status page:
     "values": {},
     "counters": {
         "heartbeats": 6751
+    },
+    "throughput": {
+        "incoming requests from customers": {
+            "sec": 51.23,
+            "min": 3073.8,
+            "hour": 184428
+        },
+        "outbound requests to billing service": {
+            "sec": 51.23,
+            "min": 3073.8,
+            "hour": 184428
+        }
     },
     "stacks": {
         "notices": [
@@ -211,6 +224,22 @@ Un-set a specific key within the ```values``` block.
 
 ```javascript
 kardia.unset("some key");
+```
+
+### kardia.throughput(name);
+
+Increment a throughput counter with the given ```name```. The throughput will get automatically calculated per second, per minute and per hour, and will appear in ```throughput``` object on the status page. Any new names will trigger automatic creation of the given throughput counter.
+
+```javascript
+kardia.throughput("incoming requests from customers");
+```
+
+### kardia.clearThroughput(name);
+
+Clear the throughput counter with the given ```name```.
+
+```javascript
+kardia.throughput("incoming requests from customers");
 ```
 
 ## Using with cluster module (master-worker processes)
