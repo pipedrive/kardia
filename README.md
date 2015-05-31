@@ -246,11 +246,13 @@ kardia.throughput("incoming requests from customers");
 
 Register a new health check handler function.
 
-After registering, the function you supplied will get called when an HTTP request is made against /check with a callback function as the first argument. Your application can then perform any logic needed to fulfill a meaningful health check and fire the supplied callback with a boolean ```true``` as the first argument (in case the service should be considered healthy), or an Error object (in case any error occurred and the service should be considered unhealthy).
+After registering, the function you supplied will get called when an HTTP request is made against ```/health``` with a callback function as the first argument. Your application can then perform any logic needed to fulfill a meaningful health check and fire the supplied callback with a boolean ```true``` as the first argument (in case the service should be considered healthy), or an Error object (in case any error occurred and the service should be considered unhealthy).
 
 Note that if the callback is not called within 15 seconds, Kardia will assume the service has become unresponsive. This timeout can be customized by calling the registerCheck method using the latter example.
 
 The recommended integration path of /check is that when any other HTTP code than 200 is received, the service should be considered unhealthy from a monitoring standpoint.
+
+This health check integration can be easily used with various monitoring tools, such as Consul — see https://www.consul.io/docs/agent/checks.html
 
 Health check registration example using a timeout of 5 seconds:
 ```javascript

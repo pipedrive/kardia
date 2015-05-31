@@ -28,7 +28,7 @@ module.exports = function(finalNext) {
 
 	var checkAndAssertHealth = function(expectedSuccess, expectedErrorMessage) {
 		return function(next) {
-			request("http://127.0.0.1:12834/check", function(err, res, body) {
+			request("http://127.0.0.1:12834/health", function(err, res, body) {
 				if (err) {
 					throw err;
 				}

@@ -9,7 +9,7 @@ module.exports = function(next) {
 	kardiaInstance.set("test-value", { specific: "value" });
 
 	setTimeout(function() {
-		request("http://127.0.0.1:12833/check", function(err, res, body) {
+		request("http://127.0.0.1:12833/health", function(err, res, body) {
 			if (err) {
 				throw err;
 			}
