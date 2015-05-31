@@ -29,7 +29,9 @@ module.exports = function(next) {
 			clearInterval(stopIfThroughputIntervalRunNotReceived);
 
 			request("http://127.0.0.1:12818", function(err, res, body) {
-				if (err) throw err;
+				if (err) {
+					throw err;
+				}
 				var data = JSON.parse(body);
 
 				if (!data || !data.throughput) {

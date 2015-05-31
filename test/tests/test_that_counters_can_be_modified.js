@@ -13,7 +13,9 @@ module.exports = function(next) {
 
 	setTimeout(function() {
 		request("http://127.0.0.1:12810", function(err, res, body) {
-			if (err) throw err;
+			if (err) {
+				throw err;
+			}
 			var data = JSON.parse(body);
 
 			if (!data.counters || !data.counters["test-counter"]) {

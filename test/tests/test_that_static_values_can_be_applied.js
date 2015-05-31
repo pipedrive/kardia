@@ -10,7 +10,9 @@ module.exports = function(next) {
 
 	setTimeout(function() {
 		request("http://127.0.0.1:12811", function(err, res, body) {
-			if (err) throw err;
+			if (err) {
+				throw err;
+			}
 			var data = JSON.parse(body);
 
 			// a little test that the server is in fact a new one, not the one from any of the previous tests:

@@ -8,7 +8,10 @@ var async = require("async"),
 var startTime = Date.now();
 
 tests.forEach(function(test) {
-	testSequence.push(require(__dirname + "/tests/" + test));
+	testSequence.push(function() {
+		console.log("Runnning " + test + " ...");
+		require(__dirname + "/tests/" + test).apply(this, arguments);
+	});
 });
 
 testSequence.push(function() {

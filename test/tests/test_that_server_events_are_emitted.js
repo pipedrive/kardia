@@ -4,7 +4,7 @@ var fail = require(__dirname + "/../lib/fail.js"),
 module.exports = function(next) {
 	var Kardia = require("../..");
 	var serviceName = "test-" + new Date().toISOString();
-	var kardiaInstance = Kardia.start({ name: serviceName, port: 12818 });
+	var kardiaInstance = Kardia.start({ name: serviceName, port: 12829 });
 
 	setTimeout(function() {
 
@@ -16,8 +16,10 @@ module.exports = function(next) {
 			next();
 		});
 
-		request("http://127.0.0.1:12818", function(err, res, body) {
-			if (err) throw err;
+		request("http://127.0.0.1:12829", function(err, res, body) {
+			if (err) {
+				throw err;
+			}
 			var data = JSON.parse(body);
 		});
 	}, 100);
