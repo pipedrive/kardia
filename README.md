@@ -1,7 +1,7 @@
 Kardia
 ======
 
-A humane service status API module to expose any operational/internals of any Node.js based microservice. JSON format over HTTP protocol. Perfect for further aggregation and consumption from a larger set of services that all expose their internals using the Kardia interface.
+A humane service status and health check API module to expose any operational/internals of any Node.js based microservice. JSON format over HTTP protocol. Field tested in production at scale. Perfect for further aggregation and consumption from a larger set of services that all expose their internals using the Kardia interface.
 
 [![NPM version](https://badge.fury.io/js/kardia.svg)](http://badge.fury.io/js/kardia)
 
@@ -14,6 +14,7 @@ To address this, we created a common status API interface which we consume and a
 
 * A common interface (JSON over HTTP) that can be consumed in a ton of different ways
 * Human-readable out of the box
+* Unified health check endpoint registration (```/health```)
 * Use the same way across master and worker processes (all workers' statuses get aggregated to master for output automatically)
 
 Usage
@@ -43,6 +44,7 @@ The status page (thus visible at ```http://localhost:12900```) will include the 
  * **gid** — process.gid of the master process
  * **values** — key-value container for any user-defined variables using ```kardia.set()``` method
  * **counters** — key-value container for any user-defined counters using ```kardia.increment()``` and ```kardia.decrement()``` methods
+ * **throughput** — key-value container for any user-defined throughput measures using ```kardia.throughput()```
  * **stacks** — container for any user-defined stacks using ```kardia.startStack()``` and ```kardia.stack()``` methods
  * **workers** — array of worker processes (kept in sync automatically and populated with data from each worker when using Node.js's cluster module)
  * **remoteAddress** — the IP address of the status page requestor
@@ -69,6 +71,18 @@ Here's an example of the status page:
     "values": {},
     "counters": {
         "heartbeats": 6751
+    },
+    "throughput": {
+        "incoming requests from customers": {
+            "sec": 51.23,
+            "min": 3073.8,
+            "hour": 184428
+        },
+        "outbound requests to billing service": {
+            "sec": 51.23,
+            "min": 3073.8,
+            "hour": 184428
+        }
     },
     "stacks": {
         "notices": [
@@ -212,6 +226,50 @@ Un-set a specific key within the ```values``` block.
 ```javascript
 kardia.unset("some key");
 ```
+
+### kardia.throughput(name);
+
+Increment a throughput counter with the given ```name```. The throughput will get automatically calculated per second, per minute and per hour, and will appear in ```throughput``` object on the status page. Any new names will trigger automatic creation of the given throughput counter.
+
+```javascript
+kardia.throughput("incoming requests from customers");
+```
+
+### kardia.clearThroughput(name);
+
+Clear the throughput counter with the given ```name```.
+
+```javascript
+kardia.throughput("incoming requests from customers");
+```
+
+### kardia.registerCheck({ handler: (function), timeout: (integer)});
+
+Register a new health check handler function.
+
+After registering, the function you supplied will get called when an HTTP request is made against ```/health``` with a callback function as the first argument. Your application can then perform any logic needed to fulfill a meaningful health check and fire the supplied callback with a boolean ```true``` as the first argument (in case the service should be considered healthy), or an Error object (in case any error occurred and the service should be considered unhealthy).
+
+Note that if the callback is not called within 15 seconds, Kardia will assume the service has become unresponsive. This timeout can be customized by calling the registerCheck method using the latter example.
+
+The recommended integration path of /check is that when any other HTTP code than 200 is received, the service should be considered unhealthy from a monitoring standpoint.
+
+This health check integration can be easily used with various monitoring tools, such as Consul — see https://www.consul.io/docs/agent/checks.html
+
+Health check registration example using a timeout of 5 seconds:
+```javascript
+kardia.registerCheck({
+    handler: function(callback) {
+        db.query("SELECT * FROM books", function(err, rows) {
+            if (err) {
+                return callback(err);
+            }
+            callback(true);
+        });
+    },
+    timeout: 5
+});
+```
+
 
 ## Using with cluster module (master-worker processes)
 
