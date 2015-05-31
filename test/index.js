@@ -17,7 +17,7 @@ tests.forEach(function(test) {
 testSequence.push(function() {
 	console.log("\n========================================");
 	console.log("OK! All tests passed. Took " + (Date.now() - startTime) + " ms");
-	console.log("========================================");
+	console.log("========================================\n");
 	process.exit();
 });
 
