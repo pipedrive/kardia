@@ -242,6 +242,32 @@ Clear the throughput counter with the given ```name```.
 kardia.throughput("incoming requests from customers");
 ```
 
+### kardia.registerCheck({ handler: (function), timeout: (integer)});
+
+Register a new health check handler function.
+
+After registering, the function you supplied will get called when an HTTP request is made against /check with a callback function as the first argument. Your application can then perform any logic needed to fulfill a meaningful health check and fire the supplied callback with a boolean ```true``` as the first argument (in case the service should be considered healthy), or an Error object (in case any error occurred and the service should be considered unhealthy).
+
+Note that if the callback is not called within 15 seconds, Kardia will assume the service has become unresponsive. This timeout can be customized by calling the registerCheck method using the latter example.
+
+The recommended integration path of /check is that when any other HTTP code than 200 is received, the service should be considered unhealthy from a monitoring standpoint.
+
+Health check registration example using a timeout of 5 seconds:
+```javascript
+kardia.registerCheck({
+    handler: function(callback) {
+        db.query("SELECT * FROM books", function(err, rows) {
+            if (err) {
+                return callback(err);
+            }
+            callback(true);
+        });
+    },
+    timeout: 5
+});
+```
+
+
 ## Using with cluster module (master-worker processes)
 
 In multi-threaded node processes where there is a master and X workers, Kardia will start the status server interface only on the master — but on the worker you can execute all commands shown above in the exact similar manner as you would on the master.
