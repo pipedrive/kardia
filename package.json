@@ -15,7 +15,9 @@
     "status",
     "page",
     "process",
-    "monitoring"
+    "monitoring",
+    "healthcheck",
+    "microservices"
   ],
   "author": "Pipedrive Inc",
   "contributors": [
