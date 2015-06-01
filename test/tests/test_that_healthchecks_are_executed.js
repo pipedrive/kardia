@@ -11,7 +11,7 @@ module.exports = function(finalNext) {
 
 	var health = "good",
 		incrediblySpecialBadHealthReasonError = "I'm not feeling well!",
-		testTimeoutInSeconds = 2;
+		testTimeoutInSeconds = 1;
 
 	kardiaInstance.registerCheck({
 		handler: function(callback) {
@@ -85,7 +85,7 @@ module.exports = function(finalNext) {
 			},
 
 			// 5. assert timeout indeed kicked in
-			checkAndAssertHealth(false, "timed out (> 2 sec)"),
+			checkAndAssertHealth(false, "timed out (> " + testTimeoutInSeconds + " sec)"),
 
 			// 6. clean up
 			function(next) {
