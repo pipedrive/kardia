@@ -14,7 +14,7 @@ module.exports = function(next) {
 
 		var stopIfThroughputIntervalRunNotReceived = setTimeout(function() {
 			fail("Expected to have reeived a 'throughputIntervalRun' event from Kardia by now");
-		}, 1500);
+		}, 9000);
 
 		var expectation = { sec: 0 }
 
