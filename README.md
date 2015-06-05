@@ -247,7 +247,9 @@ kardia.throughput("incoming requests from customers");
 
 Register a new health check handler function.
 
-After registering, the function you supplied will get called when an HTTP request is made against ```/health``` with a callback function as the first argument. Your application can then perform any logic needed to fulfill a meaningful health check and fire the supplied callback with a boolean ```true``` as the first argument (in case the service should be considered healthy), or an Error object (in case any error occurred and the service should be considered unhealthy).
+After registering, the function you supplied will get called when an HTTP request is made against ```/health``` with a callback function as the first argument, and the current Kardia status output data as the second argument (so you can build checks around specific counters or variables from that, based on the exact need). Your application can then fulfill a meaningful health check and fire the supplied callback with a boolean ```true``` as the first argument (in case the service should be considered healthy), or an Error object (in case any error occurred and the service should be considered unhealthy).
+
+When master-worker or otherwise multithreading is being used, it is intended that the health check be registered with the master process, as any worker process status data gets passed down to it within the callback arguments.
 
 Note that if the callback is not called within 15 seconds, Kardia will assume the service has become unresponsive. This timeout can be customized by calling the registerCheck method using the latter example.
 
@@ -258,7 +260,7 @@ This health check integration can be easily used with various monitoring tools, 
 Health check registration example using a timeout of 5 seconds:
 ```javascript
 kardia.registerCheck({
-    handler: function(callback) {
+    handler: function(callback, currentStatus) {
         db.query("SELECT * FROM books", function(err, rows) {
             if (err) {
                 return callback(err);
