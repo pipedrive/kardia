@@ -243,7 +243,7 @@ Clear the throughput counter with the given ```name```.
 kardia.throughput("incoming requests from customers");
 ```
 
-### kardia.registerCheck({ handler: (function), timeout: (integer)});
+### kardia.registerHealthcheck({ handler: (function), timeout: (integer)});
 
 Register a new health check handler function.
 
@@ -251,7 +251,7 @@ After registering, the function you supplied will get called when an HTTP reques
 
 When master-worker or otherwise multithreading is being used, it is intended that the health check be registered with the master process, as any worker process status data gets passed down to it within the callback arguments.
 
-Note that if the callback is not called within 15 seconds, Kardia will assume the service has become unresponsive. This timeout can be customized by calling the registerCheck method using the latter example.
+Note that if the callback is not called within 15 seconds, Kardia will assume the service has become unresponsive. This timeout can be customized by calling the registerHealthcheck method using the latter example.
 
 The recommended integration path of /check is that when any other HTTP code than 200 is received, the service should be considered unhealthy from a monitoring standpoint.
 
@@ -259,17 +259,28 @@ This health check integration can be easily used with various monitoring tools, 
 
 Health check registration example using a timeout of 5 seconds:
 ```javascript
-kardia.registerCheck({
+kardia.registerHealthcheck({
     handler: function(callback, currentStatus) {
         db.query("SELECT * FROM books", function(err, rows) {
             if (err) {
                 return callback(err);
             }
-            callback(true);
+            callback();
         });
     },
     timeout: 5
 });
+```
+Or alternatively:
+
+```
+kardia.registerHealthcheck(function(callback, currentStatus) {
+    if (allOk) {
+        callback();
+    } else {
+        callback(err);
+    }
+}
 ```
 
 

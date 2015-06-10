@@ -13,10 +13,10 @@ module.exports = function(finalNext) {
 		incrediblySpecialBadHealthReasonError = "I'm not feeling well!",
 		testTimeoutInSeconds = 1;
 
-	kardiaInstance.registerCheck({
+	kardiaInstance.registerHealthcheck({
 		handler: function(callback) {
 			if (health === "good") {
-				callback(true);
+				callback();
 			} else if (health === "bad") {
 				callback(new Error(incrediblySpecialBadHealthReasonError));
 			} else {
@@ -54,7 +54,7 @@ module.exports = function(finalNext) {
 				
 				next();
 			});
-		}
+		};
 	};
 
 	var expectingTimeoutTimeout = setTimeout(function() {
@@ -101,4 +101,4 @@ module.exports = function(finalNext) {
 			}
 		]);
 	}, 100);
-}
+};

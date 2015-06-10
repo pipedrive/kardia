@@ -7,12 +7,12 @@ setInterval(function() {
 }, 1500);
 
 // also set up a basic health check, that can be accessed via http://localhost:12900/check
-kardia.registerCheck({
+kardia.registerHealthcheck({
 	handler: function(callback) {
 		if (parseInt(Date.now().toString().substr(-1), 10) > 6) {
 			return callback(new Error("Health check randomly failing! Just for demo purposes. Try checking again!"));
 		}
-		callback(true);
+		callback();
 	},
 	timeout: 2
 });
