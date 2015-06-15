@@ -32,6 +32,13 @@ var kardia = Kardia.start({ name: "My process", host: '0.0.0.0', port: 12900 });
 
 Then, when run on the master process, Kardia will create a new HTTP server on the designated host (default 0.0.0.0) and port (default 12900) which lists the indicators of the running process in JSON format. On the worker process (using Node.js's cluster module), it will expose the same interface and start collecting data which it sends back to the master process automatically using IPC to be displayed with the Kardia HTTP server along with data from the master and all worker processes.
 
+Kardia server will be a singleton, accessible from every file in the master process. So all subsequent calls to Kardia can be to obtain the reference to the running server with the following syntax from any file:
+```javascript
+var kardia = require('kardia');
+```
+
+Also, when used in the master-worker cluster, you can use the exact same syntax as shown above from any worker process.
+
 The status page (thus visible at ```http://localhost:12900```) will include the following components:
  * **service** – The name of the service running
  * **pid** – The PID of the master process
