@@ -3,6 +3,7 @@ var fail = require(__dirname + "/../lib/fail.js");
 module.exports = function(next) {
 	var errStr = "Kardia cannot start - service name must be supplied";
 	console.log("Expecting "+errStr);
+
 	try {
 		var Kardia = require("../..");
 		Kardia.start({});
