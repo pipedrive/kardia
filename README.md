@@ -1,12 +1,10 @@
-Kardia
-======
+# Kardia
 
 A humane service status and health check API module to expose any operational/internals of any Node.js based microservice. JSON format over HTTP protocol. Field tested in production at scale. Perfect for further aggregation and consumption from a larger set of services that all expose their internals using the Kardia interface.
 
 [![NPM version](https://badge.fury.io/js/kardia.svg)](http://badge.fury.io/js/kardia)
 
-Why?
-====
+## Why?
 
 When running several Node.js based microservices across large number of hosts/containers like we do here at Pipedrive, we discovered it becomes increasingly difficult to monitor the state of different internal variables inside these processes.
 
@@ -17,8 +15,21 @@ To address this, we created a common status API interface which we consume and a
 * Unified health check endpoint registration (```/health```)
 * Use the same way across master and worker processes (all workers' statuses get aggregated to master for output automatically)
 
-Usage
-=====
+## Methods
+
+ * [kardia.increment(key, n);](#kardiaincrementkey-n)
+ * [kardia.decrement(key, n);](#kardiadecrementkey-n)
+ * [kardia.startStack(name, length);](#kardiastartstackname-length)
+ * [kardia.stack(name, value);](#kardiastackname-value)
+ * [kardia.stopStack(name);](#kardiastopstackname)
+ * [kardia.set(key, value);](#kardiasetkey-value)
+ * [kardia.unset(key);](#kardiaunsetkey)
+ * [kardia.throughput(name);](#kardiathroughputname)
+ * [kardia.clearThroughput(name);](#kardiaclearthroughputname)
+ * [kardia.registerHealthcheck({ handler: (function), timeout: (integer)});](#kardiaregisterhealthcheckhandler-function-timeout-integer)
+
+## Usage
+
 ```
 npm install kardia
 ```
@@ -33,6 +44,7 @@ var kardia = Kardia.start({ name: "My process", host: '0.0.0.0', port: 12900 });
 Then, when run on the master process, Kardia will create a new HTTP server on the designated host (default 0.0.0.0) and port (default 12900) which lists the indicators of the running process in JSON format. On the worker process (using Node.js's cluster module), it will expose the same interface and start collecting data which it sends back to the master process automatically using IPC to be displayed with the Kardia HTTP server along with data from the master and all worker processes.
 
 Kardia server will be a singleton, accessible from every file in the master process. So all subsequent calls to Kardia can be to obtain the reference to the running server with the following syntax from any file:
+
 ```javascript
 var kardia = require('kardia');
 ```
@@ -174,8 +186,7 @@ can build a central handler to aggregate their statuses or hook them up to your 
 systems.
 
 
-Methods
-=======
+## Methods
 
 ### kardia.increment(key, n);
 
@@ -299,17 +310,14 @@ In multi-threaded node processes where there is a master and X workers, Kardia w
 
 ---
 
-Licence
-=======
+## Licence
 
 MIT
 
-Want to contribute?
-===================
+## Want to contribute?
 
-You're welcome. Please issue a pull request, and also keep an eye on the tests and the readme.
+You're welcome! Please issue a pull request, and also keep an eye on updating the tests and the readme.
 
-What's the name about?
-======================
+## What's the name about?
 
 From Greek: kardia, meaning heart.
