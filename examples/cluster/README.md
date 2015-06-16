@@ -4,7 +4,7 @@ This is a simple example of how Kardia can be used in the master-worker cluster 
 
 ### On the master process
 
-On the master process (and really just once in the entire master process scope), you have to start Kardia using the following syntax:
+On the master process (**just once** in the entire master process scope), you have to start Kardia using the following syntax:
 
 ```javascript
 var kardia = require('kardia').start({ name: "master-worker-cluster-example", port: 12800 });
