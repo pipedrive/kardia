@@ -262,26 +262,28 @@ Note that if the callback is not called within 15 seconds, Kardia will assume th
 
 The recommended integration path of /check is that when any other HTTP code than 200 is received, the service should be considered unhealthy from a monitoring standpoint.
 
-This health check integration can be easily used with various monitoring tools, such as Consul — see https://www.consul.io/docs/agent/checks.html
+This health check integration can be easily used with various monitoring tools, such as [Consul](https://www.consul.io/docs/agent/checks.html). Also, Kardia comes with a special method (`kardia.getConsulHealthcheck()`) for obtaining the health check details for direct Consul integration, using the [consul-node](https://github.com/silas/consul-node) npm module.
 
 Health check registration example using a timeout of 5 seconds:
 ```javascript
 kardia.registerHealthcheck({
     handler: function(callback, currentStatus) {
-        db.query("SELECT * FROM books", function(err, rows) {
-            if (err) {
-                return callback(err);
-            }
+        // do some health check logic here.
+        if (allOk) {
             callback();
-        });
+        } else {
+            callback(err);
+        }
     },
     timeout: 5
 });
 ```
+
 Or alternatively:
 
-```
+```javascript
 kardia.registerHealthcheck(function(callback, currentStatus) {
+    // do some health check logic here.
     if (allOk) {
         callback();
     } else {
