@@ -26,7 +26,7 @@ To address this, we created a common status API interface which we consume and a
  * [kardia.unset(key);](#kardiaunsetkey)
  * [kardia.throughput(name);](#kardiathroughputname)
  * [kardia.clearThroughput(name);](#kardiaclearthroughputname)
- * [kardia.registerHealthcheck({ handler: (function), timeout: (integer)});](#kardiaregisterhealthcheckhandler-function-timeout-integer)
+ * [kardia.registerHealthcheck({ handler: (function), timeout: (integer)});](#kardiaregisterhealthcheck-handler-function-timeout-integer)
 
 ## Usage
 
