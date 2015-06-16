@@ -37,7 +37,7 @@ Kardia server will be a singleton, accessible from every file in the master proc
 var kardia = require('kardia');
 ```
 
-Also, when used in the master-worker cluster, you can use the exact same syntax as shown above from any worker process.
+Also, when used in the [master-worker cluster](examples/cluster), you can use the exact same syntax as shown above from any worker process.
 
 The status page (thus visible at ```http://localhost:12900```) will include the following components:
  * **service** – The name of the service running
