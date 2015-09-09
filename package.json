@@ -4,7 +4,9 @@
   "description": "A humane process status API module to expose any operational/internal indicators of any Node.js process for status aggregation and monitoring. JSON format over HTTP protocol.",
   "main": "index.js",
   "scripts": {
-    "test": "node test/index.js"
+    "test": "node test/index.js",
+    "coverage": "node_modules/.bin/istanbul --include-all-sources -x 'examples/**' --recursive cover --report lcov test/index.js",
+    "sonar": "npm run coverage"
   },
   "repository": {
     "type": "git",
@@ -31,6 +33,7 @@
   "homepage": "https://github.com/pipedrive/kardia",
   "devDependencies": {
     "async": "^1.0.0",
-    "request": "^2.56.0"
+    "request": "^2.56.0",
+    "istanbul": "*"
   }
 }
