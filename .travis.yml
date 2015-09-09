@@ -13,3 +13,5 @@ notifications:
       - martin@pipedrive.com
     on_success: change
     on_failure: change
+
+sudo: false
