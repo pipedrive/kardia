@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "node test/index.js",
-    "coverage": "node_modules/.bin/istanbul --include-all-sources -x 'examples/**' --recursive cover --report lcov test/index.js",
+    "coverage": "node_modules/.bin/istanbul --include-all-sources -x='examples/**' --recursive cover --report lcov test/index.js",
     "sonar": "npm run coverage"
   },
   "repository": {
