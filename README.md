@@ -273,8 +273,6 @@ Note that if the callback is not called within 15 seconds, Kardia will assume th
 
 The recommended integration path of /check is that when any other HTTP code than 200 is received, the service should be considered unhealthy from a monitoring standpoint.
 
-This health check integration can be easily used with various monitoring tools, such as [Consul](https://www.consul.io/docs/agent/checks.html). Also, Kardia comes with a special method (`kardia.getConsulHealthcheck()`) for obtaining the health check details for direct Consul integration, using the [consul-node](https://github.com/silas/consul-node) npm module.
-
 Health check registration example using a timeout of 5 seconds:
 ```javascript
 kardia.registerHealthcheck({
@@ -303,8 +301,19 @@ kardia.registerHealthcheck(function(callback, currentStatus) {
 }
 ```
 
+#### Built-in Consul health check integration
 
-## Using with cluster module (master-worker processes)
+Kardia's health check handler mechanism can be easily used with various monitoring tools, such as [Consul](https://www.consul.io/docs/agent/checks.html). Furthermore, Kardia comes with a designated method (`kardia.getConsulHealthcheck()`) for obtaining the health check details for direct Consul integration, using the [consul-node](https://github.com/silas/node-consul#consulagentserviceregisteroptions-callback) npm module.
+
+
+Consul integration example (using [consul-node]() npm module):
+```javascript
+consul.agent.service.register({ name: "my-service", check: kardia.getConsulHealthcheck() }, function(err) {
+  if (err) throw err;
+});
+```
+
+## Using Kardia with node's cluster module (master-worker processes)
 
 In multi-threaded node processes where there is a master and X workers, Kardia will start the status server interface only on the master — but on the worker you can execute all commands shown above in the exact similar manner as you would on the master.
 
