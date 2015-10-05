@@ -2,7 +2,7 @@
 
 A humane service status and health check API module to expose any operational/internals of any Node.js based microservice. JSON format over HTTP protocol. Field tested in production at scale. Perfect for further aggregation and consumption from a larger set of services that all expose their internals using the Kardia interface.
 
-[![NPM version](https://badge.fury.io/js/kardia.svg)](http://badge.fury.io/js/kardia)
+[![NPM version](https://badge.fury.io/js/kardia.svg)](http://badge.fury.io/js/kardia) [![Build status](https://travis-ci.org/pipedrive/kardia.svg)](https://travis-ci.org/pipedrive/kardia)
 
 ## Why?
 
