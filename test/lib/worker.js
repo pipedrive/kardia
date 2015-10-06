@@ -6,7 +6,7 @@ setTimeout(function() {
 			clearInterval(updater);
 		}
 		catch (e) {
-			console.log('Not yet');
+			// ignore.
 		}
 	});
 }, 100);
