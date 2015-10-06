@@ -43,4 +43,39 @@ describe('Event emitter', function() {
 			next();
 		});
 	});
+
+	it('Should support removing event listeners', function(next) {
+		var Kardia = require('../'),
+			clock = sinon.useFakeTimers(),
+			serviceName = 'test-' + new Date().toISOString(),
+			eventFired = false,
+			kardiaInstance = Kardia.start({ name: serviceName, port: 12829 });
+
+		clock.tick(100);
+
+		kardiaInstance.on('serverRequest', function() {
+			if (eventFired) {
+				fail('Event listener should have been removed!');
+			}
+			eventFired = true;
+			kardiaInstance.removeListener('serverRequest');
+			makeCheck(false);
+			
+		});
+
+		makeCheck(true);
+
+		function makeCheck(keepAlive) {
+			request('http://127.0.0.1:12829', function(err, res, body) {
+				if (err) {
+					throw err;
+				}
+				var data = JSON.parse(body);
+				if (!keepAlive) {
+					kardiaInstance.stopServer();
+					next();
+				}
+			});
+		}
+	});
 });

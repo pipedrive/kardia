@@ -97,36 +97,64 @@ describe('Health checks', function() {
 		]);
 	});
 
-	it('Should warn against unregistered health checks', function(next) {
-		var Kardia = require("../"),
-			clock = sinon.useFakeTimers(),
-			serviceName = "test-" + new Date().toISOString(),
-			kardiaInstance = Kardia.start({ name: serviceName, port: 12833 });
+	it('Should support registering health check endpoint with the .start() call', function(done) {
+		var clock = sinon.useFakeTimers(),
+			Kardia = require('../'),
+			serviceName = 'test-' + new Date().toISOString(),
+			healthcheckHandler = function(callback) {
+				var kardiaData = kardiaInstance.generateStatus(),
+					err = null;
+				if (!kardiaData.values['test-value']) {
+					err = new Error('Expected test-value');
+				}
+				callback(err);
+			},
+			kardiaInstance = Kardia.start({
+				name: serviceName,
+				port: 12811,
+				healthcheck: healthcheckHandler
+			});
 
-		kardiaInstance.set("test-value", { specific: "value" });
+		kardiaInstance.set('test-value', { specific: 'value' });
 
 		clock.tick(100);
-		request("http://127.0.0.1:12833/health", function(err, res, body) {
+		request('http://127.0.0.1:12811/health', function(err, res, body) {
 			if (err) {
 				throw err;
 			}
 			var data = JSON.parse(body);
 
 			if (!data) {
-				fail("Expected health check endpoint to respond with a JSON.");
+				fail('Expected health check endpoint to respond with a JSON.');
 			}
 
-			if (data.success !== false) {
-				fail("Expected health check endpoint to respond with success: false");
+			if (data.success !== true) {
+				fail('Expected health check endpoint to respond with success: true');
 			}
 
-			if (data.error.indexOf("Health check not registered") < 0) {
-				fail("Expected health check endpoint to respond with error: \"Health check not registered\"");
-			}
+			kardiaInstance.stopServer();
 			
+			done();
+		});
+	});
+
+	it('Should warn against unregistered health checks', function(done) {
+		var Kardia = require('../'),
+			clock = sinon.useFakeTimers(),
+			serviceName = 'test-' + new Date().toISOString(),
+			kardiaInstance = Kardia.start({ name: serviceName, port: 12833 });
+
+		kardiaInstance.set('test-value', { specific: 'value' });
+
+		clock.tick(100);
+		request('http://127.0.0.1:12833/health', function(err, res, body) {
+			if (res.statusCode !== 500) {
+				fail('Expected a an error 500 to be returned from health check endpoint');
+			}
+
 			kardiaInstance.stopServer();
 
-			next();
+			done();
 		});
 	});
 });

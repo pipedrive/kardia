@@ -12,9 +12,7 @@ describe('Throughput', function() {
 
 		clock.tick(100);
 
-		kardiaInstance.throughputCalculationStep = 1;
-
-		var bumperIntervalMs = 150;
+		var bumperIntervalMs = 337;
 
 		var expectation = {
 			sec: 0
@@ -31,7 +29,6 @@ describe('Throughput', function() {
 		kardiaInstance.on('throughputIntervalRun', function() {
 			clearInterval(bumper);
 
-			clock.tick(100);
 			request('http://127.0.0.1:12818', function(err, res, body) {
 				if (err) {
 					throw err;
@@ -64,6 +61,12 @@ describe('Throughput', function() {
 
 				if (!data.throughput['test~req'][kardiaInstance.throughputCalculationStep].min || data.throughput['test~req'][kardiaInstance.throughputCalculationStep].min > expectation.min || data.throughput['test~req'][kardiaInstance.throughputCalculationStep].min < expectation.min) {
 					fail('Expecting "test~req" throughput per hour to be ' + expectation.hour + ', saw ' + data.throughput['test~req'][kardiaInstance.throughputCalculationStep].min);
+				}
+
+				kardiaInstance.clearThroughput('test~req');
+
+				if (kardiaInstance.throughput['test~req']) {
+					fail('Expecting "test~req" throughput to be cleared');
 				}
 
 				kardiaInstance.stopServer();

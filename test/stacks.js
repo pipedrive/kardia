@@ -54,6 +54,14 @@ describe('Stacks', function() {
 				fail('Expected test-stack2 length to equal 2 in response from Kardia, saw ' + data.stacks['test-stack2'].length + ' instead');
 			}
 
+			kardiaInstance.stopStack('test-stack2');
+
+			var newData = kardiaInstance.generateStatus();
+
+			if (newData.stacks['test-stack2']) {
+				fail('Expected test-stack2 to be stopped.');
+			}
+
 			kardiaInstance.stopServer();
 
 			next();

@@ -7,7 +7,7 @@
     "test": "mocha test",
     "coverage": "node_modules/.bin/istanbul --include-all-sources -x='examples/**' --recursive cover --report lcov test/index.js",
     "sonar": "npm run coverage",
-    "test-travis": "./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha -x='examples/**' -- -R spec ./test/*"
+    "test-travis": "./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha -- -R spec ./test/*"
   },
   "repository": {
     "type": "git",
@@ -34,7 +34,8 @@
   "homepage": "https://github.com/pipedrive/kardia",
   "devDependencies": {
     "async": "^1.0.0",
-    "istanbul": "*",
+    "istanbul": "^0.3.22",
+    "mocha": "^2.3.3",
     "request": "^2.56.0",
     "sinon": "^1.17.1"
   }
