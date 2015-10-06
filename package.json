@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha test",
-    "coverage": "node_modules/.bin/istanbul --include-all-sources -x='examples/**' --recursive cover --report lcov test/index.js",
-    "sonar": "npm run coverage",
+    "coverage": "npm run-script test-travis",
+    "sonar": "npm run-script test-travis",
     "test-travis": "./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha -- -R spec ./test/*"
   },
   "repository": {
