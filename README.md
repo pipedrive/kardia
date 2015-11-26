@@ -299,7 +299,7 @@ kardia.registerHealthcheck(function(callback, currentStatus) {
     } else {
         callback(err);
     }
-}
+});
 ```
 
 #### Built-in Consul health check integration
