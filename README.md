@@ -318,6 +318,24 @@ consul.agent.service.register({ name: "my-service", check: kardia.getConsulHealt
 
 In multi-threaded node processes where there is a master and X workers, Kardia will start the status server interface only on the master — but on the worker you can execute all commands shown above in the exact similar manner as you would on the master.
 
+## Using Kardia to report increments to [fluentd](http://www.fluentd.org/) via UDP
+
+In order to report counter increments to fluentd via UDP, specify fluentd daemon hostname and port in service configuration.
+```json
+{
+    ...
+    "config": {
+        "name": "example-service",
+        "port": 12900,
+        "debug": false,
+        "fluentd": {
+            "host": "127.0.0.1",
+            "port": 1337
+        }
+    }
+}
+```
+
 ---
 
 ## Licence
