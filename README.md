@@ -323,7 +323,6 @@ In multi-threaded node processes where there is a master and X workers, Kardia w
 In order to report counter increments to fluentd via UDP, specify fluentd daemon hostname and port in service configuration.
 ```json
 {
-    ...
     "config": {
         "name": "example-service",
         "port": 12900,
