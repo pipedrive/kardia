@@ -329,7 +329,8 @@ In order to report counter increments to fluentd via UDP, specify fluentd daemon
         "debug": false,
         "fluentd": {
             "host": "127.0.0.1",
-            "port": 1337
+            "port": 1337,
+            "sendInterval": 1000
         }
     }
 }
