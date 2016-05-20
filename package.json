@@ -1,6 +1,6 @@
 {
   "name": "kardia",
-  "version": "0.7.5",
+  "version": "0.7.6",
   "description": "A humane process status API module to expose any operational/internal indicators of any Node.js process for status aggregation and monitoring. JSON format over HTTP protocol.",
   "main": "index.js",
   "scripts": {
@@ -25,7 +25,8 @@
   "author": "Pipedrive Inc",
   "contributors": [
     "Martin Tajur",
-    "Andris Reinman"
+    "Andris Reinman",
+    "Timur Hassanov"
   ],
   "license": "MIT",
   "bugs": {
