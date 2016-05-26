@@ -11,10 +11,12 @@ When running several Node.js based microservices across large number of hosts/co
 
 To address this, we created a common status API interface which we consume and analyze centrally, with all Node.js services on all hosts exposing their internal status using Kardia format.
 
-* A common interface (JSON over HTTP) that can be consumed in a ton of different ways
-* Human-readable out of the box
-* Unified health check endpoint registration (```/health```)
-* Use the same way across master and worker processes (all workers' statuses get aggregated to master for output automatically)
+ * A common interface (JSON over HTTP) that can be consumed in a ton of different ways
+ * Human-readable out of the box
+ * Unified health check endpoint registration (```/health```)
+ * Use the same way across master and worker processes (all workers' statuses get aggregated to master for output automatically)
+ * Built-in support for sending increment based counters to fluentd
+ * Built-in helper method to integrate with Consul HTTP based health checks
 
 ## Methods
 
