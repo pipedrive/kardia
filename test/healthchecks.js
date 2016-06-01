@@ -218,4 +218,34 @@ describe('Health checks', function() {
 			done();
 		});
 	});
+
+	it('Should provide object for Consul health check registration', function(done) {
+		var Kardia = require('../'),
+			serviceName = 'test-' + Math.round(Math.random() * 1000),
+			kardiaInstance = Kardia.start({ name: serviceName, port: 12832 });
+
+		kardiaInstance.set('test-value', { specific: 'value' });
+		kardiaInstance.registerHealthcheck(sinon.spy());
+
+		var consulParamsWithDefaults = kardiaInstance.getConsulHealthcheck();
+		var consulParamsWithOptions = kardiaInstance.getConsulHealthcheck({
+			interval: '5s',
+			notes: 'test',
+			service_id: '123'
+		});
+
+		consulParamsWithDefaults.interval.should.equal('10s');
+		consulParamsWithDefaults.should.have.property('notes');
+		consulParamsWithDefaults.http.should.equal('http://' + require('os').hostname() + ':12832/health?service_name=' + encodeURIComponent(serviceName));
+		consulParamsWithDefaults.service_id.should.equal(serviceName);
+
+		consulParamsWithOptions.interval.should.equal('5s');
+		consulParamsWithOptions.notes.should.equal('test');
+		consulParamsWithOptions.http.should.equal('http://' + require('os').hostname() + ':12832/health?service_name=' + encodeURIComponent(serviceName));
+		consulParamsWithOptions.service_id.should.equal('123');
+
+		kardiaInstance.stopServer();
+
+		done();
+	});
 });
