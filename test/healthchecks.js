@@ -7,7 +7,7 @@ describe('Health checks', function() {
 	it('Should support health check endpoints', function(done) {
 		var Kardia = require('../'),
 			clock = sinon.useFakeTimers(),
-			serviceName = 'test-' + new Date().toISOString(),
+			serviceName = 'test-' + Math.round(Math.random() * 1000),
 			kardiaInstance = Kardia.start({ name: serviceName, port: 12834 });
 
 		kardiaInstance.set('test-value', { specific: 'value' });
@@ -97,10 +97,71 @@ describe('Health checks', function() {
 		]);
 	});
 
+	it('Should support service name match and fail when name does not match', function(done) {
+		var Kardia = require('../'),
+			clock = sinon.useFakeTimers(),
+			serviceName = 'test-' + Math.round(Math.random() * 1000),
+			kardiaInstance = Kardia.start({ name: serviceName, port: 12809 });
+
+		kardiaInstance.registerHealthcheck({
+			handler: function(callback) {
+				callback();
+			},
+			timeout: 2
+		});
+
+		var checkAndAssertHealth = function(expectedSuccess, expectedErrorMessage) {
+			return function(next) {
+				request('http://127.0.0.1:12809/health?service_name=' + (expectedSuccess ? encodeURIComponent(serviceName) : 'someotherservice'), function(err, res, body) {
+					if (err) {
+						throw err;
+					}
+					var data = JSON.parse(body);
+
+					if (!data) {
+						fail('Expected health check endpoint to respond with a JSON.');
+					}
+
+					if (data.success !== expectedSuccess) {
+						fail('Expected health check endpoint to respond with success: ' + (expectedSuccess ? 'true' : 'false'));
+					}
+
+					if (expectedSuccess === false) {
+						if (!data.error) {
+							fail('Expected error message to be present in health check response JSON');
+						}
+
+						if (data.error.indexOf(expectedErrorMessage) < 0) {
+							fail('Expected health check endpoint to respond with error: "' + expectedErrorMessage + '"');
+						}
+					}
+					
+					next();
+				});
+			};
+		};
+
+		clock.tick(100);
+		async.series([
+
+			// 1. first run the health check, assuming everything is fine
+			checkAndAssertHealth(true),
+
+			// 2. expect them to be bad via the health check when wrong service name is given
+			checkAndAssertHealth(false, 'Service name mismatch'),
+
+			// 3. finish the test
+			function() {
+				kardiaInstance.stopServer();
+				done();
+			}
+		]);
+	});
+
 	it('Should support registering health check endpoint with the .start() call', function(done) {
 		var clock = sinon.useFakeTimers(),
 			Kardia = require('../'),
-			serviceName = 'test-' + new Date().toISOString(),
+			serviceName = 'test-' + Math.round(Math.random() * 1000),
 			healthcheckHandler = function(callback) {
 				var kardiaData = kardiaInstance.generateStatus(),
 					err = null;
@@ -141,7 +202,7 @@ describe('Health checks', function() {
 	it('Should warn against unregistered health checks', function(done) {
 		var Kardia = require('../'),
 			clock = sinon.useFakeTimers(),
-			serviceName = 'test-' + new Date().toISOString(),
+			serviceName = 'test-' + Math.round(Math.random() * 1000),
 			kardiaInstance = Kardia.start({ name: serviceName, port: 12833 });
 
 		kardiaInstance.set('test-value', { specific: 'value' });
