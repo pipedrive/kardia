@@ -25,7 +25,7 @@ describe('Values', function() {
 			}
 
 			if (!data.values || !data.values['test-value'] || typeof data.values['test-value'] !== 'object') {
-				fail('Expected test-value to exist in response from Kardia. and be an object');
+				fail('Expected test-value to exist in response from Kardia and be an object');
 			}
 
 			if (data.values['test-value'].specific !== 'value') {
@@ -35,6 +35,45 @@ describe('Values', function() {
 			kardiaInstance.stopServer();
 
 			next();
+		});
+	});
+
+	it('Should support unset of values', function(next) {
+		var Kardia = require('../'),
+			serviceName = 'test-' + new Date().toISOString(),
+			kardiaInstance = Kardia.start({ name: serviceName, port: 12811 }),
+			clock = sinon.useFakeTimers();
+
+		clock.tick(100);
+
+		kardiaInstance.set('test-value', { specific: 'value' });
+
+		request('http://127.0.0.1:12811', function(err, res, body) {
+			if (err) {
+				throw err;
+			}
+			var data = JSON.parse(body);
+
+			if (!data.values || !data.values['test-value'] || typeof data.values['test-value'] !== 'object') {
+				fail('Expected test-value to exist in response from Kardia and be an object');
+			}
+
+			kardiaInstance.unset('test-value');
+
+			request('http://127.0.0.1:12811', function(err, res, body) {
+				if (err) {
+					throw err;
+				}
+				var data = JSON.parse(body);
+
+				if (data.values['test-value']) {
+					fail('Expected test-value to NOT exist in response from Kardia');
+				}
+
+				kardiaInstance.stopServer();
+
+				next();
+			});
 		});
 	});
 });
