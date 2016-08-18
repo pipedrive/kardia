@@ -11,7 +11,7 @@
 		currentStatus = new Status({});
 		module.exports = currentStatus;
 	} else {
-		var startHandler = function(config) {
+		var startHandler = function(config, callback) {
 			if (currentStatus === null) {
 				currentStatus = new Status(config);
 
@@ -30,6 +30,11 @@
 
 				module.exports = currentStatus;
 			}
+
+			if (callback && typeof callback === 'function') {
+				callback();
+			}
+
 			return currentStatus;
 		};
 
