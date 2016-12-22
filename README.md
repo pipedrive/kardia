@@ -316,7 +316,7 @@ consul.agent.service.register({ name: "my-service", check: kardia.getConsulHealt
 });
 ```
 
-Health checks can be integrated to Consul by registering an HTTP check against an URL such as http://your.service.hostname:12900/health. Additionally, you may want to supply the following query string: `?service_name=your-service-name`. By adding the `service_name` property in the query string, Kardia will check this against the given service name to make sure the health checks performed by Consul don't end up accessing other services instead. This will reduce the risk of intermittent service registration errors in Docker based environments with dynamic ports.
+Health checks can be integrated to Consul by registering an HTTP check against an URL such as http://your.service.hostname:12900/health. Additionally, you may want to supply the following query string: `?service_name=your-service-name`. By adding the `service_name` property in the query string, Kardia will check this against the given service name to make sure the health checks performed by Consul don't end up accessing other services instead. This will reduce the risk of intermittent service registration errors in Docker based environments with dynamic ports. Using `kardia.getConsulHealthcheck()` will already include the use of `service_name` query string parameter.
 
 ## Using Kardia with node's cluster module (master-worker processes)
 
