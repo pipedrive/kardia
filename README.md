@@ -16,7 +16,7 @@ To address this, we created a common status API interface which we consume and a
  * Unified health check endpoint registration (```/health```)
  * Use the same way across master and worker processes (all workers' statuses get aggregated to master for output automatically)
  * Built-in support for sending increment based counters to fluentd
- * Built-in helper method to integrate with Consul HTTP based health checks
+ * Built-in helper method to [integrate with Consul HTTP based health checks](#built-in-consul-health-check-integration)
 
 ## Methods
 
