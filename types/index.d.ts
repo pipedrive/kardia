@@ -11,6 +11,8 @@
  */
 
 declare module "kardia" {
+    import { NetworkInterfaceInfo } from "os";
+    import { ServerRequest } from "http";
 
     interface HealthCheckOptions {
         timeout: number,
