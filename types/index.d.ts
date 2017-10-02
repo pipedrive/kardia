@@ -49,7 +49,7 @@ declare module "kardia" {
             arch: string;
             release: string;
             uptime: number;
-            loadavg: number [];
+            loadavg: number[];
             totalmem: number;
             freemem: number;
 
