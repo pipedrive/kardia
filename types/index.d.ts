@@ -1,4 +1,3 @@
-
 /**
  * Type definitions for kardia 0.10.1
  * Project: https://github.com/pipedrive/kardia
@@ -20,8 +19,42 @@ declare module "kardia" {
 
     interface Configuration {
         name: string;
-        host: string;
-        port: number;
+        host?: string;
+        port?: number;
+    }
+
+    interface Status {
+        service: string;
+        pid: number;
+        env: string;
+        uptime: number;
+        uptime_formatted: string;
+        startTime: string;
+        curTime: string;
+        uid?: number;
+        gid?: number;
+        values: any;
+        counters: any;
+        throughput: any;
+        stacks: any;
+        workers: any;
+        remoteAddress: boolean;
+        network: { [index: string]: NetworkInterfaceInfo[] };
+        hostname: string;
+        memory: string;
+        fallBehind: number;
+        os: {
+            type: string;
+            platform: NodeJS.Platform;
+            arch: string;
+            release: string;
+            uptime: number;
+            loadavg: number [];
+            totalmem: number;
+            freemem: number;
+
+        };
+        config: Configuration;
     }
 
     export function start(config: Configuration): void;
@@ -90,5 +123,11 @@ declare module "kardia" {
      * @param options Healthcheck options.
      */
     export function registerHealthcheck(options: HealthCheckOptions): void;
+
+    /**
+     * Return process status information (memory, os, network, etc...)
+     * @param request 
+     */
+    export function generateStatus(request?: ServerRequest): Status;
 }
 
