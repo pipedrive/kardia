@@ -46,6 +46,6 @@
     "sinon": "^1.17.1"
   },
   "dependencies": {
-    "@types/node": "^8.0.31"
+    "@types/node": "^0.12.10"
   }
 }
