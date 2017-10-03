@@ -44,8 +44,5 @@
     "should": "^8.3.1",
     "should-sinon": "0.0.5",
     "sinon": "^1.17.1"
-  },
-  "dependencies": {
-    "@types/node": "^0.12.10"
   }
 }
