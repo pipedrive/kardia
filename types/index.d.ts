@@ -112,9 +112,9 @@ declare module "kardia" {
         decrement(key: string, n: number): void;
 
         /**
- * Reset the value with the given key.
- * @param name Name of the key
- */
+         * Reset the value with the given key.
+         * @param name Name of the key
+         */
         reset(name: string): void;
 
         /**
