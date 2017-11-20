@@ -30,7 +30,7 @@ describe('Extra endpoints', function() {
 			}).on('error', function(e) {
 				kardiaInstance.stopServer();
 				return done(e);
-			})
+			});
 		}).on('error', function(e) {
 			kardiaInstance.stopServer();
 			return done(e);
@@ -64,7 +64,7 @@ describe('Extra endpoints', function() {
 			}).on('error', function(e) {
 				kardiaInstance.stopServer();
 				return done(e);
-			})
+			});
 		}).on('error', function(e) {
 			kardiaInstance.stopServer();
 			return done(e);
