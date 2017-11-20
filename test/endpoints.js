@@ -27,7 +27,7 @@ describe('Extra endpoints', function() {
 				buffer.join("").should.equal('some output');
 				kardiaInstance.stopServer();
 				return done();
-			}).on('', function(e) {
+			}).on('error', function(e) {
 				kardiaInstance.stopServer();
 				return done(e);
 			})
@@ -58,10 +58,10 @@ describe('Extra endpoints', function() {
 				buffer.push(data.toString());
 				kardiaInstance.stopServer();
 			}).on('end', function() {
-				buffer.join("").should.equal('123');
+				buffer.join('').should.equal('123');
 				kardiaInstance.stopServer();
 				return done();
-			}).on('', function(e) {
+			}).on('error', function(e) {
 				kardiaInstance.stopServer();
 				return done(e);
 			})
