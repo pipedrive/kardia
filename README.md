@@ -30,7 +30,7 @@ To address this, we created a common status API interface which we consume and a
  * [kardia.throughput(name);](#kardiathroughputname)
  * [kardia.clearThroughput(name);](#kardiaclearthroughputname)
  * [kardia.registerHealthcheck({ handler: (function), timeout: (integer)});](#kardiaregisterhealthcheck-handler-function-timeout-integer)
-
+ * [kardia.registerEndpoint(name, output);](#kardiaregisterendpointname-output)
 ## Usage
 
 ```
@@ -302,6 +302,15 @@ kardia.registerHealthcheck(function(callback, currentStatus) {
         callback(err);
     }
 });
+```
+
+### kardia.registerEndpoint(name, output);
+
+Registers endpoint ```name``` with ```output```. ```output``` is a function or a string.
+
+```javascript
+kardia.registerEndpoint('/someEndpoint', 'output');
+kardia.registerEndpoint('/someAnotherEndpoint', fn);
 ```
 
 #### Built-in Consul health check integration
