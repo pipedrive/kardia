@@ -1,5 +1,5 @@
 /**
- * Type definitions for kardia 0.10.2
+ * Type definitions for kardia 0.11.0
  * Project: https://github.com/pipedrive/kardia
  * Definitions by: Marco Talento
  * Dependencies: npm install @types/node
@@ -230,6 +230,13 @@ declare module "kardia" {
          * @param res Server Response
          */
         serveHealthcheckRequest(req: ServerRequest, res: ServerResponse): void;
+
+        /**
+         * Registers endpoint name with output
+         * @param name Endpoint name. (eg. /endpoint-example)
+         * @param output Output
+         */
+        registerEndpoint(name: string, output: string | Function): void;
     }
 
     var kardia: Status;
