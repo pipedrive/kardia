@@ -11,13 +11,12 @@
  * const statusInfo = kardia.generateStatus();
  */
 
-declare module "kardia" {
+import { ServerRequest, ServerResponse } from "http";
 
-    import { ServerRequest, ServerResponse } from "http";
-
-    /**
-     * Status Configuration
-     */
+declare namespace kardia {
+	/**
+	 * Status Configuration
+	 */
     interface Configuration {
         name: string;
         host?: string;
@@ -26,17 +25,17 @@ declare module "kardia" {
         healthcheck?: (cb?: Function) => void;
     }
 
-    /**
-     * Health Check Options
-     */
+	/**
+	 * Health Check Options
+	 */
     interface HealthCheckOptions {
         timeout?: number,
         handler: Function;
     }
 
-    /**
-     * Process Info
-     */
+	/**
+	 * Process Info
+	 */
     interface StatusInfo {
         service: string;
         pid: number;
@@ -71,9 +70,9 @@ declare module "kardia" {
         config: Configuration;
     }
 
-    /**
-     * Consul Parameters
-     */
+	/**
+	 * Consul Parameters
+	 */
     interface ConsulParams {
         interval: string;
         notes: string;
@@ -97,148 +96,148 @@ declare module "kardia" {
         fallBehind: number;
         config: Configuration;
 
-        /**
-         *  Increment a counter by N. The counters appear in counters object on the status page. The counter gets created if it did not exist yet. Useful for, for example, analyzing execution counts of specific functions (e.g. performed 291 API PUT requests).
-            * @param key key
-            * @param n value to increment
-         */
+		/**
+		 *  Increment a counter by N. The counters appear in counters object on the status page. The counter gets created if it did not exist yet. Useful for, for example, analyzing execution counts of specific functions (e.g. performed 291 API PUT requests).
+			* @param key key
+			* @param n value to increment
+		 */
         increment(key: string, n: number): void;
 
-        /**
-         * Decrement a counter by N.
-         * @param key Key
-         * @param n value to decrement
-         */
+		/**
+		 * Decrement a counter by N.
+		 * @param key Key
+		 * @param n value to decrement
+		 */
         decrement(key: string, n: number): void;
 
-        /**
-         * Reset the value with the given key.
-         * @param name Name of the key
-         */
+		/**
+		 * Reset the value with the given key.
+		 * @param name Name of the key
+		 */
         reset(name: string): void;
 
-        /**
-         * Start a new stack with the given name and with a given max length. In the example below, we start the "notices" stack that will be capped at 20 items at all times. You do not have to call .startStack() to start pushing values to a stack — if you pushed to a non-existing stack, the stack would automatically be generated and its length would be capped at 15 items by default.
-         * @param name Name of the stack
-         * @param length Lenght of the stack
-         */
+		/**
+		 * Start a new stack with the given name and with a given max length. In the example below, we start the "notices" stack that will be capped at 20 items at all times. You do not have to call .startStack() to start pushing values to a stack — if you pushed to a non-existing stack, the stack would automatically be generated and its length would be capped at 15 items by default.
+		 * @param name Name of the stack
+		 * @param length Lenght of the stack
+		 */
         startStack(name: string, length: number): void;
 
-        /**
-         * Push a new value to a stack. A stack can be pre-configured using .startStack() but does not have to be. If .stack() is called without .startStack(), the default length of the stack will be 15 items.
-         * @param name Name of the stack
-         * @param value Value
-         */
+		/**
+		 * Push a new value to a stack. A stack can be pre-configured using .startStack() but does not have to be. If .stack() is called without .startStack(), the default length of the stack will be 15 items.
+		 * @param name Name of the stack
+		 * @param value Value
+		 */
         stack(name: string, value: string): void;
 
-        /**
-         * Remove a stack and any of its values.
-         * @param name Name of the stack
-         */
+		/**
+		 * Remove a stack and any of its values.
+		 * @param name Name of the stack
+		 */
         stopStack(name: string): void;
 
-        /**
-         * Set a specific value to the values key-value object in the status page. Useful for, for example, connection status indications (e.g. whether a certain connection is "CONNECTED" or "CLOSED", etc).
-         * @param name Name of the key
-         * @param value Value of the key
-         */
+		/**
+		 * Set a specific value to the values key-value object in the status page. Useful for, for example, connection status indications (e.g. whether a certain connection is "CONNECTED" or "CLOSED", etc).
+		 * @param name Name of the key
+		 * @param value Value of the key
+		 */
         set(name: string, value: any): void;
 
-        /**
-         * Un-set a specific key within the values block.
-         * @param name Name of the key
-         */
+		/**
+		 * Un-set a specific key within the values block.
+		 * @param name Name of the key
+		 */
         unset(name: string): void;
 
-        /**
-         * Increment a throughput counter with the given name. The throughput will get automatically calculated per second, per minute and per hour, and will appear in throughput object on the status page. Any new names will trigger automatic creation of the given throughput counter.
-         * @param name Name of the throughput counter.
-         */
+		/**
+		 * Increment a throughput counter with the given name. The throughput will get automatically calculated per second, per minute and per hour, and will appear in throughput object on the status page. Any new names will trigger automatic creation of the given throughput counter.
+		 * @param name Name of the throughput counter.
+		 */
         throughput(name: string): void;
 
-        /**
-         * Increment a throughput counter with the given name. The throughput will get automatically calculated per second, per minute and per hour, and will appear in throughput object on the status page. Any new names will trigger automatic creation of the given throughput counter.
-         * @param name Name of the throughput counter.
-         */
+		/**
+		 * Increment a throughput counter with the given name. The throughput will get automatically calculated per second, per minute and per hour, and will appear in throughput object on the status page. Any new names will trigger automatic creation of the given throughput counter.
+		 * @param name Name of the throughput counter.
+		 */
         clearThroughput(name: string): void;
 
-        /**
-         * Return process status information (memory, os, network, etc...)
-         * @param request
-         */
+		/**
+		 * Return process status information (memory, os, network, etc...)
+		 * @param request
+		 */
         generateStatus(request?: ServerRequest): StatusInfo;
     }
 
-    /**
-     * Kardia Status
-     */
+	/**
+	 * Kardia Status
+	 */
     interface Status extends Worker {
         healthcheck: Function;
         healthcheckTimeout: number;
         workers: { [pid: number]: Worker };
 
-        /**
-         * Register a new health check handler function. (Read: https://github.com/pipedrive/kardia#kardiaregisterhealthcheck-handler-function-timeout-integer)
-         * @param options Healthcheck options.
-         */
+		/**
+		 * Register a new health check handler function. (Read: https://github.com/pipedrive/kardia#kardiaregisterhealthcheck-handler-function-timeout-integer)
+		 * @param options Healthcheck options.
+		 */
         registerHealthcheck(options: HealthCheckOptions | Function): void;
 
-        /**
-         * Add a worker to the main kardia status
-         * @param worker worker child to add
-         */
+		/**
+		 * Add a worker to the main kardia status
+		 * @param worker worker child to add
+		 */
         addWorker(worker: Worker): Worker
 
-        /**
-         * Remove a worker by process id
-         * @param pid process id of the worker child
-         */
+		/**
+		 * Remove a worker by process id
+		 * @param pid process id of the worker child
+		 */
         removeWorker(pid: number): void;
 
-        /**
-         * Start internal HttpServer that exposes the process Metrics
-         */
+		/**
+		 * Start internal HttpServer that exposes the process Metrics
+		 */
         startServer(): void;
 
-        /**
-         * Stops the internal HttpServer
-         */
+		/**
+		 * Stops the internal HttpServer
+		 */
         stopServer(): void;
 
-        /**
-         * Start a new instance of Kardia
-         * @param config Kardia Configuration
-         */
+		/**
+		 * Start a new instance of Kardia
+		 * @param config Kardia Configuration
+		 */
         start(config: Configuration): Status;
 
-        /**
-         * Get Consul Parameters
-         * @param options Optional parameters
-         */
+		/**
+		 * Get Consul Parameters
+		 * @param options Optional parameters
+		 */
         getConsulHealthcheck(options: { interval?: string, notes?: string, service_id?: string }): ConsulParams;
 
-        /**
-         * Set the server handler
-         * @param req Server Request
-         * @param res Server Response
-         */
+		/**
+		 * Set the server handler
+		 * @param req Server Request
+		 * @param res Server Response
+		 */
         serveStatusRequest(req: ServerRequest, res: ServerResponse): void;
 
-        /**
-         * Set the Healthcheck handler (/health)
-         * @param req Server Request
-         * @param res Server Response
-         */
+		/**
+		 * Set the Healthcheck handler (/health)
+		 * @param req Server Request
+		 * @param res Server Response
+		 */
         serveHealthcheckRequest(req: ServerRequest, res: ServerResponse): void;
 
-        /**
-         * Registers endpoint name with output
-         * @param name Endpoint name. (eg. /endpoint-example)
-         * @param output Output
-         */
+		/**
+		 * Registers endpoint name with output
+		 * @param name Endpoint name. (eg. /endpoint-example)
+		 * @param output Output
+		 */
         registerEndpoint(name: string, output: string | Function): void;
     }
-
-    var kardia: Status;
-    export = kardia;
 }
+
+declare const kardia: kardia.Status;
+export = kardia;
