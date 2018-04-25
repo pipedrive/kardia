@@ -1,0 +1,6 @@
+{
+  "name": "kardia",
+  "description": "A humane service status and health check API module of Node.js based microservice",
+  "owner": "Pipedrive",
+  "type": "library"
+}
