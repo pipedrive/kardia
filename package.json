@@ -5,10 +5,10 @@
   "main": "index.js",
   "typings": "types/index.d.ts",
   "scripts": {
-    "test": "mocha test",
+    "test": "mocha test --exit",
     "coverage": "npm run-script test-travis",
     "sonar": "npm run-script test-travis",
-    "test-travis": "./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha -- -R spec ./test/*"
+    "test-travis": "./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha --  --exit -R spec ./test/*"
   },
   "repository": {
     "type": "git",
