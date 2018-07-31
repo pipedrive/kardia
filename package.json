@@ -3,6 +3,9 @@
   "version": "0.12.1",
   "description": "A humane process status API module to expose any operational/internal indicators of any Node.js process for status aggregation and monitoring. JSON format over HTTP protocol.",
   "main": "index.js",
+  "engines": {
+    "node": ">=6.0"
+  },
   "typings": "types/index.d.ts",
   "scripts": {
     "test": "mocha test --exit",
