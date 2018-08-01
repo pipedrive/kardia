@@ -3,12 +3,15 @@
   "version": "0.12.1",
   "description": "A humane process status API module to expose any operational/internal indicators of any Node.js process for status aggregation and monitoring. JSON format over HTTP protocol.",
   "main": "index.js",
+  "engines": {
+    "node": ">=6.0"
+  },
   "typings": "types/index.d.ts",
   "scripts": {
-    "test": "mocha test",
+    "test": "mocha test --exit",
     "coverage": "npm run-script test-travis",
     "sonar": "npm run-script test-travis",
-    "test-travis": "./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha -- -R spec ./test/*"
+    "test-travis": "./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha --  --exit -R spec ./test/*"
   },
   "repository": {
     "type": "git",
@@ -36,9 +39,9 @@
   "homepage": "https://github.com/pipedrive/kardia",
   "devDependencies": {
     "async": "^1.0.0",
-    "coveralls": "^2.11.4",
+    "coveralls": "^3.0.2",
     "istanbul": "^0.3.22",
-    "mocha": "^2.3.3",
+    "mocha": "^5.2.0",
     "proxyquire": "^1.7.4",
     "request": "^2.56.0",
     "should": "^8.3.1",
