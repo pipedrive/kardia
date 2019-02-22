@@ -38,14 +38,14 @@
   },
   "homepage": "https://github.com/pipedrive/kardia",
   "devDependencies": {
-    "async": "^1.0.0",
+    "async": "^2.6.2",
     "coveralls": "^3.0.2",
     "istanbul": "^0.4.5",
-    "mocha": "^5.2.0",
-    "proxyquire": "^1.7.4",
+    "mocha": "^6.0.0",
+    "proxyquire": "^2.1.0",
     "request": "^2.56.0",
-    "should": "^8.3.1",
-    "should-sinon": "0.0.5",
-    "sinon": "^1.17.1"
+    "should": "^13.2.3",
+    "should-sinon": "0.0.6",
+    "sinon": "^7.2.4"
   }
 }

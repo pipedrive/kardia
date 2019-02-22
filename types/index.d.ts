@@ -11,7 +11,7 @@
  * const statusInfo = kardia.generateStatus();
  */
 
-import { ServerRequest, ServerResponse } from "http";
+import { IncomingMessage, ServerResponse } from "http";
 
 declare namespace kardia {
 	/**
@@ -165,7 +165,7 @@ declare namespace kardia {
 		 * Return process status information (memory, os, network, etc...)
 		 * @param request
 		 */
-		generateStatus(request?: ServerRequest): StatusInfo;
+		generateStatus(request?: IncomingMessage): StatusInfo;
 	}
 
 	/**
@@ -221,14 +221,14 @@ declare namespace kardia {
 		 * @param req Server Request
 		 * @param res Server Response
 		 */
-		serveStatusRequest(req: ServerRequest, res: ServerResponse): void;
+		serveStatusRequest(req: IncomingMessage, res: ServerResponse): void;
 
 		/**
 		 * Set the Healthcheck handler (/health)
 		 * @param req Server Request
 		 * @param res Server Response
 		 */
-		serveHealthcheckRequest(req: ServerRequest, res: ServerResponse): void;
+		serveHealthcheckRequest(req: IncomingMessage, res: ServerResponse): void;
 
 		/**
 		 * Registers endpoint name with output
