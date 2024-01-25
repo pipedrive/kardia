@@ -1,8 +1,7 @@
 {
   "name": "kardia",
   "description": "A humane service status and health check API module of Node.js based microservice",
-  "owner": "Fusion",
-  "launchpad": "Core",
+  "owner": "Core",
   "type": "library",
   "status": "released"
 }
